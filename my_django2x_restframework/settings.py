@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -115,18 +116,128 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+#
+# TIME_ZONE = 'UTC'
+#
+# USE_I18N = True
+#
+# USE_L10N = True
+#
+# USE_TZ = True
 
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'zh-hans'
+
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
-
+USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Django RestFramework 配置
+REST_FRAMEWORK = {
+    "DEFAULT_VERSION": 'v1',  # 默认的版本
+    "ALLOWED_VERSIONS": ['v1', 'v2'],  # 允许的版本
+    "VERSION_PARAM": 'version',  # GET方式url中参数的名字  ?version=xxx
+    "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer', # 浏览器模式
+    ),
+    'EXCEPTION_HANDLER': 'app.utils.common.exceptions.exception.custom_exception_handler',
+
+    'DEFAULT_THROTTLE_CLASSES': (
+        # 'rest_framework.throttling.AnonRateThrottle',
+        # 'rest_framework.throttling.UserRateThrottle'
+        'rest_framework.throttling.ScopedRateThrottle',  # throttle_scope = 'uploads'
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        # 'anon': '2/m',
+        # 'user': '5/m',
+        "throttle_base_30_Min": "30/m",  # 所有接口
+        'login_throttle': '20/m', # 登录节流
+    },
+}
+
+JWT_AUTH = {
+    # 指明token的有效期
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    'JWT_ISSUER': 'http://fasfdas.baicu',
+    'JWT_AUTH_HEADER_PREFIX': 'TOKEN',
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=1)
+}
+
+# from django.contrib.auth import authenticate # 验证使用
+# AUTHENTICATION_BACKENDS = (
+#     'app.utils.common.authenticates.authenticate.CustomBackend',
+# )
+
+
+# **********************************************************
+# ********************** 全局常量  **************************
+# **********************************************************
+MY_PAGE_SIZE = 20 # 默认分页,每页显示条数
+MY_ARTICLE_PAGE_SIZE = 5 # 客户端文章列表分页,每页显示条数
+MY_PAGE_SIZE_QUERY_PARAM = "size" # 可以通过传入pager1/?page=2&size=4,改变默认每页显示的个数
+MY_MAX_PAGE_SIZE = 1000 # 最大页数不超过1000
+MY_PAGE_QUERY_PARAM = "page"  # 获取页码数的
+
+
+"""
+------------------------
+******* 跨域 配置 *******
+------------------------
+"""
+# 中间件
+# 'corsheaders.middleware.CorsMiddleware', # 跨域
+# 'django.middleware.common.CommonMiddleware', # 顺序不能变
+# 跨域增加忽略
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    '*',
+)
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+    # 'VIEW',
+)
+
+CORS_ALLOW_HEADERS = (
+    'XMLHttpRequest',
+    'X_FILENAME',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'User-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'token',
+)
+
+
+# FONTPATH = myconfig.FONTPATH # 系统字体
+#
+# # celery config
+# CELERY_BROKER_URL = myconfig.get_celery_config()["CELERY_BROKER_URL"] # redis作为中间件
+# CELERY_ACCEPT_CONTENT = myconfig.get_celery_config()["CELERY_ACCEPT_CONTENT"]
+# CELERY_TASK_SERIALIZER = myconfig.get_celery_config()["CELERY_TASK_SERIALIZER"]
+# CELERY_RESULT_BACKEND = myconfig.get_celery_config()["CELERY_RESULT_BACKEND"] # 数据结果存储地址
+# CELERY_BEAT_SCHEDULE = myconfig.get_celery_config()["CELERY_BEAT_SCHEDULE"]
+# CELERY_TIMEZONE = myconfig.get_celery_config()["CELERY_TIMEZONE"] # 时区
