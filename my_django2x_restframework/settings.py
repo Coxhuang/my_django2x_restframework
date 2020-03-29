@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'my_django2x_restframework.wsgi.application'
 # * @备注  : None
 # *                                                                             *
 # *******************************************************************************
-# AUTH_USER_MODEL = 'app_user.UserProfile' # 使用抽象类(AbstractUser)时,打开这个 from django.contrib.auth.models import AbstractUser
+AUTH_USER_MODEL = 'app_user.UserProfile' # 使用抽象类(AbstractUser)时,打开这个 from django.contrib.auth.models import AbstractUser
 # from django.contrib.auth import authenticate # 验证使用
 # AUTHENTICATION_BACKENDS = (
 #     'app.utils.common.authenticates.authenticate.CustomBackend',
