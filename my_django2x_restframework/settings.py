@@ -71,12 +71,30 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'my_django2x_restframework.wsgi.application'
-# AUTH_USER_MODEL = 'app_user.UserProfile' # 使用抽象类(AbstractUser)时,打开这个 from django.contrib.auth.models import AbstractUser
 
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : Django参数
+# * @功能  : 配置自定义Django参数
+# * @备注  : None
+# *                                                                             *
+# *******************************************************************************
+# AUTH_USER_MODEL = 'app_user.UserProfile' # 使用抽象类(AbstractUser)时,打开这个 from django.contrib.auth.models import AbstractUser
+# from django.contrib.auth import authenticate # 验证使用
+# AUTHENTICATION_BACKENDS = (
+#     'app.utils.common.authenticates.authenticate.CustomBackend',
+# )
 
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : 数据库引擎
+# * @功能  : 配置数据库类型
+# * @备注  : None
+# *                                                                             *
+# *******************************************************************************
 DATABASES = {
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
@@ -126,9 +144,9 @@ AUTH_PASSWORD_VALIDATORS = [
 #
 # USE_TZ = True
 
-LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = 'zh-hans' # Django admin 中文显示
 
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = 'Asia/Shanghai' # 上海时区
 
 USE_I18N = True
 
@@ -142,7 +160,13 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 
-# Django RestFramework 配置
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : Django RESTFramework
+# * @功能  : 配置DRF插件
+# * @备注  : None
+# *                                                                             *
+# *******************************************************************************
 REST_FRAMEWORK = {
     "DEFAULT_VERSION": 'v1',  # 默认的版本
     "ALLOWED_VERSIONS": ['v1', 'v2'],  # 允许的版本
@@ -150,16 +174,16 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": ("django_filters.rest_framework.DjangoFilterBackend",),
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer', # 浏览器模式
+        'rest_framework.renderers.BrowsableAPIRenderer', # 浏览器模式,浏览器访问,渲染DRF自带UI界面
     ),
     'EXCEPTION_HANDLER': 'app.utils.common.exceptions.exception.custom_exception_handler',
 
-    'DEFAULT_THROTTLE_CLASSES': (
+    'DEFAULT_THROTTLE_CLASSES': ( # 自定义节流
         # 'rest_framework.throttling.AnonRateThrottle',
         # 'rest_framework.throttling.UserRateThrottle'
         'rest_framework.throttling.ScopedRateThrottle',  # throttle_scope = 'uploads'
     ),
-    'DEFAULT_THROTTLE_RATES': {
+    'DEFAULT_THROTTLE_RATES': { # 节流限流配置
         # 'anon': '2/m',
         # 'user': '5/m',
         "throttle_base_30_Min": "30/m",  # 所有接口
@@ -167,24 +191,29 @@ REST_FRAMEWORK = {
     },
 }
 
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : TOKEN
+# * @功能  : token配置
+# * @备注  : None
+# *                                                                             *
+# *******************************************************************************
 JWT_AUTH = {
-    # 指明token的有效期
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1), # 指明token的有效期
     'JWT_ISSUER': 'http://fasfdas.baicu',
     'JWT_AUTH_HEADER_PREFIX': 'TOKEN',
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=1)
 }
 
-# from django.contrib.auth import authenticate # 验证使用
-# AUTHENTICATION_BACKENDS = (
-#     'app.utils.common.authenticates.authenticate.CustomBackend',
-# )
 
-
-# **********************************************************
-# ********************** 全局常量  **************************
-# **********************************************************
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : 分页
+# * @功能  : 分页参数配置
+# * @备注  : None
+# *                                                                             *
+# *******************************************************************************
 MY_PAGE_SIZE = 20 # 默认分页,每页显示条数
 MY_ARTICLE_PAGE_SIZE = 5 # 客户端文章列表分页,每页显示条数
 MY_PAGE_SIZE_QUERY_PARAM = "size" # 可以通过传入pager1/?page=2&size=4,改变默认每页显示的个数
@@ -192,15 +221,15 @@ MY_MAX_PAGE_SIZE = 1000 # 最大页数不超过1000
 MY_PAGE_QUERY_PARAM = "page"  # 获取页码数的
 
 
-"""
-------------------------
-******* 跨域 配置 *******
-------------------------
-"""
-# 中间件
-# 'corsheaders.middleware.CorsMiddleware', # 跨域
-# 'django.middleware.common.CommonMiddleware', # 顺序不能变
-# 跨域增加忽略
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : 跨域配置
+# * @功能  : 解决前后端分离跨域问题
+# * @备注  : 看一下说明,有几个需要注意的地方
+# * #说明2 : 在settings.py文件中添加中间件 corsheaders.middleware.CorsMiddleware
+# * #说明2 : 中间件corsheaders.middleware.CorsMiddleware必须放在第三的位置,不能任意放
+# *                                                                             *
+# *******************************************************************************
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
@@ -231,13 +260,3 @@ CORS_ALLOW_HEADERS = (
     'token',
 )
 
-
-# FONTPATH = myconfig.FONTPATH # 系统字体
-#
-# # celery config
-# CELERY_BROKER_URL = myconfig.get_celery_config()["CELERY_BROKER_URL"] # redis作为中间件
-# CELERY_ACCEPT_CONTENT = myconfig.get_celery_config()["CELERY_ACCEPT_CONTENT"]
-# CELERY_TASK_SERIALIZER = myconfig.get_celery_config()["CELERY_TASK_SERIALIZER"]
-# CELERY_RESULT_BACKEND = myconfig.get_celery_config()["CELERY_RESULT_BACKEND"] # 数据结果存储地址
-# CELERY_BEAT_SCHEDULE = myconfig.get_celery_config()["CELERY_BEAT_SCHEDULE"]
-# CELERY_TIMEZONE = myconfig.get_celery_config()["CELERY_TIMEZONE"] # 时区
