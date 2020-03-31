@@ -40,7 +40,7 @@ settings.py注释规范:
 .
 ├── authenticates # 自定义用户验证 
 ├── base
-├── cacheredis # 重写Redis
+├── cacheredis # 重写Redis, 解决高版本4.0的Celery与高本版的Redis不兼容问题 
 ├── exceptions # 异常拦截器 
 ├── files # 文件操作 
 ├── jsonschemas # json校验 
