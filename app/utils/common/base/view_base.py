@@ -5,14 +5,14 @@ from app.utils.common.exceptions import exception
 
 # *******************************************************************************
 # *                                                                             *
-# * @标题  : 我的-视图-基类
+# * @标题  : 我的-视图-自定义方法-基类
 # * @功能  : 公共的视图处理方法
-# * @备注  : None
+# * @备注  : 该基类的方法为公共方法,不建议添加非公共方法,非公共方法添加到 MyViewApp 类中
 # *                                                                             *
 # *******************************************************************************
 class MyViewBase(object):
 
-    throttle_scope = 'throttle_base_30_Min' # 节流
+    throttle_scope = 'throttle_base_30_Min' # 节流每分钟30次
 
     def __init__(self):
 

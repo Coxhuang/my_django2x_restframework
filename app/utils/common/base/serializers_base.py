@@ -6,7 +6,7 @@ from app.utils.common.cacheredis.cacheredis import my_redis
 # *                                                                             *
 # * @标题  : 我的序列化
 # * @功能  : 序列化方法
-# * @备注  : None
+# * @备注  : 该基类的方法为公共方法,不建议添加非公共方法,非公共方法添加到 MySerializerApp 中
 # *                                                                             *
 # *******************************************************************************
 class MySerializerBase(DynamicFieldsMixin,serializers.ModelSerializer):

@@ -10,10 +10,23 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework import permissions
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from app.utils.common.paginations.pagination import MyPagination
-from app.utils.common.base.view_base import MyViewBase
+from app.utils.common.views.view import MyViewApp
 
 
-class CreateModel(CreateModelMixin,GenericViewSet,MyViewBase):
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : 视图-应用层
+# * @功能  : 视图应用层类
+# * @备注  : None
+# * @说明1  : MyCreateModeMixin --> POST -- 插入数据
+# * @说明2  : MyDeleteModelMixin --> DELETE -- 删除数据
+# * @说明3  : MyUpdateModelMixin --> UPDATE -- 更新数据
+# * @说明4  : MyListModeMixin --> GET -- 获取数据列表
+# * @说明5  : MyRetrieveModelMixin --> GET -- 获取某行数据
+# * @说明6  : MyAPIView --> * -- 普通请求
+# *                                                                             *
+# *******************************************************************************
+class MyCreateModeMixin(CreateModelMixin,GenericViewSet,MyViewApp):
 
     authentication_classes = (JSONWebTokenAuthentication,) # 验证
     permission_classes = (permissions.IsAuthenticated,) # 权限
@@ -37,14 +50,13 @@ class CreateModel(CreateModelMixin,GenericViewSet,MyViewBase):
         }, status=status.HTTP_201_CREATED)
 
     def initial(self, request, *args, **kwargs):
-        super(CreateModel, self).initial(request, *args, **kwargs)
-        # self.intercept_visitor_request(request=request)
+        super(MyCreateModeMixin, self).initial(request, *args, **kwargs)
 
-class DestroyModel(DestroyModelMixin,GenericViewSet,MyViewBase):
+class MyDeleteModelMixin(DestroyModelMixin,GenericViewSet,MyViewApp):
 
     authentication_classes = (JSONWebTokenAuthentication,)  # 验证
     permission_classes = (permissions.IsAuthenticated,)  # 权限
-    msg_delete = "成功删除" # 返回时显示的消息
+    msg_delete = "删除成功" # 返回时显示的消息
     lookup_field = "pk"  # 主键
 
     def destroy(self, request, *args, **kwargs):
@@ -59,10 +71,9 @@ class DestroyModel(DestroyModelMixin,GenericViewSet,MyViewBase):
         }, status=status.HTTP_200_OK)
 
     def initial(self, request, *args, **kwargs):
-        super(DestroyModel, self).initial(request, *args, **kwargs)
+        super(MyDeleteModelMixin, self).initial(request, *args, **kwargs)
 
-
-class UpdateModel(UpdateModelMixin,GenericViewSet,MyViewBase):
+class MyUpdateModelMixin(UpdateModelMixin,GenericViewSet,MyViewApp):
 
     authentication_classes = (JSONWebTokenAuthentication,)  # 验证
     permission_classes = (permissions.IsAuthenticated,)  # 权限
@@ -91,18 +102,15 @@ class UpdateModel(UpdateModelMixin,GenericViewSet,MyViewBase):
             "results": data
         }, status=status.HTTP_200_OK)
 
-
     def initial(self, request, *args, **kwargs):
-        super(UpdateModel, self).initial(request, *args, **kwargs)
-        # self.intercept_visitor_request(request=request)
+        super(MyUpdateModelMixin, self).initial(request, *args, **kwargs)
 
-
-class ListModel(ListModelMixin,GenericViewSet,MyViewBase):
+class MyListModelMixin(ListModelMixin,GenericViewSet,MyViewApp):
 
     authentication_classes = (JSONWebTokenAuthentication,)  # 验证
     permission_classes = (permissions.IsAuthenticated,)  # 权限
     pagination_class = MyPagination  # 分页
-    msg_list = "成功获取列表数据"
+    msg_list = "获取列表数据成功"
 
     def list(self, request, *args, **kwargs):
 
@@ -122,15 +130,13 @@ class ListModel(ListModelMixin,GenericViewSet,MyViewBase):
         }, status=status.HTTP_200_OK)
 
     def initial(self, request, *args, **kwargs):
-        super(ListModel, self).initial(request, *args, **kwargs)
-        # self.intercept_visitor_request(request=request)
+        super(MyListModelMixin, self).initial(request, *args, **kwargs)
 
-
-class RetrieveModel(RetrieveModelMixin,GenericViewSet,MyViewBase):
+class MyRetrieveModelMixin(RetrieveModelMixin,GenericViewSet,MyViewApp):
 
     authentication_classes = (JSONWebTokenAuthentication,)  # 验证
     permission_classes = (permissions.IsAuthenticated,)  # 权限
-    msg_detail = "成功获取详细数据"
+    msg_detail = "获取详细数据成功"
     lookup_field = "pk"  # 主键
 
     def retrieve(self, request, *args, **kwargs):
@@ -140,13 +146,13 @@ class RetrieveModel(RetrieveModelMixin,GenericViewSet,MyViewBase):
         return Response({
             "success": True,
             "msg": self.msg_detail,
-            "results": [serializer.data] # 以列表的格式给
+            "results": [serializer.data] # 以列表的格式返回
         }, status=status.HTTP_200_OK)
 
     def initial(self, request, *args, **kwargs):
-        super(RetrieveModel, self).initial(request, *args, **kwargs)
+        super(MyRetrieveModelMixin, self).initial(request, *args, **kwargs)
 
-class APIViewModel(APIView,MyViewBase):
+class MyAPIView(APIView,MyViewApp):
 
     authentication_classes = (JSONWebTokenAuthentication,)  # 验证
     permission_classes = (permissions.IsAuthenticated,)  # 权限
@@ -162,5 +168,4 @@ class APIViewModel(APIView,MyViewBase):
     #     }, status=status.HTTP_400_BAD_REQUEST)
 
     def initial(self, request, *args, **kwargs):
-        super(APIViewModel, self).initial(request, *args, **kwargs)
-        # self.intercept_visitor_request(request=request) # apiview 没有action
+        super(MyAPIView, self).initial(request, *args, **kwargs)
