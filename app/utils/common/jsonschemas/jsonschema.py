@@ -16,9 +16,9 @@ class MyJsonSchema(object):
             "$schema": "http://json-schema.org/draft-04/schema#",
             "title": "TestInfo",
             "description": "some information about test",
-            "type": "object",
-            "properties": {},
-            "required": [],
+            "type": "object", # 类型
+            "properties": {}, # 参数
+            "required": [], # 必须参数
         }
 
     def init(self,instance=None, schema=None):
