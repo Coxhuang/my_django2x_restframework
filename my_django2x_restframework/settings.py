@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework_swagger', # swagger 文档
+    'django_filters', #
+    'django_crontab', #
+    'rest_framework.authtoken', #
+    'rest_framework', #
     'app',
+    'app_user',
 ]
 
 MIDDLEWARE = [
@@ -96,19 +102,19 @@ AUTH_USER_MODEL = 'app_user.UserProfile' # 使用抽象类(AbstractUser)时,打�
 # *                                                                             *
 # *******************************************************************************
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # mysql 引擎
-        'NAME': 'blog_db', # 数据库名
-        'USER': 'root', # 登录用户名
-        'PASSWORD': 'root', # 登录密码
-        'HOST': '127.0.0.1', # mysql地址
-        'PORT': '3306', # mysql 端口号
-        'CONN_MAX_AGE': 600, # 最大链接时间
-    }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql', # mysql 引擎
+    #     'NAME': 'blog_db', # 数据库名
+    #     'USER': 'root', # 登录用户名
+    #     'PASSWORD': 'root', # 登录密码
+    #     'HOST': '127.0.0.1', # mysql地址
+    #     'PORT': '3306', # mysql 端口号
+    #     'CONN_MAX_AGE': 600, # 最大链接时间
+    # }
 }
 
 
