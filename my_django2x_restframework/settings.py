@@ -182,7 +182,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer', # 浏览器模式,浏览器访问,渲染DRF自带UI界面
     ),
-    'EXCEPTION_HANDLER': 'app.utils.common.exceptions.exception.custom_exception_handler',
+    'EXCEPTION_HANDLER': 'app.utils.common.exceptions.exception.custom_exception_handler', # 自定义用户验证
 
     'DEFAULT_THROTTLE_CLASSES': ( # 自定义节流
         # 'rest_framework.throttling.AnonRateThrottle',
