@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework_swagger', # swagger 文档
+    # 'rest_framework_swagger', # swagger 文档
     'django_filters', #
     'django_crontab', #
     'rest_framework.authtoken', #
@@ -221,7 +221,6 @@ JWT_AUTH = {
 # *                                                                             *
 # *******************************************************************************
 MY_PAGE_SIZE = 20 # 默认分页,每页显示条数
-MY_ARTICLE_PAGE_SIZE = 5 # 客户端文章列表分页,每页显示条数
 MY_PAGE_SIZE_QUERY_PARAM = "size" # 可以通过传入pager1/?page=2&size=4,改变默认每页显示的个数
 MY_MAX_PAGE_SIZE = 1000 # 最大页数不超过1000
 MY_PAGE_QUERY_PARAM = "page"  # 获取页码数的
