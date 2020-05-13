@@ -165,6 +165,20 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : DRF用户
+# * @功能  : 配置DRF用户参数
+# * @备注  : None
+# *                                                                             *
+# *******************************************************************************
+AUTH_USER_MODEL = 'app_user.UserProfile' # 使用抽象类(AbstractUser)时,打开这个 from django.contrib.auth.models import AbstractUser
+### from django.contrib.auth import authenticate # 验证使用
+# AUTHENTICATION_BACKENDS = (
+#     'utils.common.authenticates.authenticate.CustomBackend',
+# )
+
+
 
 # *******************************************************************************
 # *                                                                             *
@@ -182,7 +196,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer', # 浏览器模式,浏览器访问,渲染DRF自带UI界面
     ),
-    'EXCEPTION_HANDLER': 'app.utils.common.exceptions.exception.custom_exception_handler', # 自定义用户验证
+    'EXCEPTION_HANDLER': 'utils.common.exceptions.exception.custom_exception_handler', # 自定义用户验证
 
     'DEFAULT_THROTTLE_CLASSES': ( # 自定义节流
         # 'rest_framework.throttling.AnonRateThrottle',
@@ -211,19 +225,6 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=1)
 }
-
-
-# *******************************************************************************
-# *                                                                             *
-# * @标题  : 分页
-# * @功能  : 分页参数配置
-# * @备注  : None
-# *                                                                             *
-# *******************************************************************************
-MY_PAGE_SIZE = 20 # 默认分页,每页显示条数
-MY_PAGE_SIZE_QUERY_PARAM = "size" # 可以通过传入pager1/?page=2&size=4,改变默认每页显示的个数
-MY_MAX_PAGE_SIZE = 1000 # 最大页数不超过1000
-MY_PAGE_QUERY_PARAM = "page"  # 获取页码数的
 
 
 # *******************************************************************************
@@ -264,4 +265,103 @@ CORS_ALLOW_HEADERS = (
     'x-requested-with',
     'token',
 )
+
+
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : 日志
+# * @功能  : 记录代码运行状况
+# * @备注  : None
+# *                                                                             *
+# *******************************************************************************
+
+BASE_LOG_DIR = os.path.join(BASE_DIR, "log")
+LOGGING = {
+    'version': 1,  # 保留字
+    'disable_existing_loggers': False,  # 禁用已经存在的logger实例
+
+    # 1. 日志文件的格式, 也就是最终在.log文件中存在格式, 以下几种, 任选一种
+    'formatters': {
+        # 详细的日志格式
+        'standard': {
+            'format': '[%(asctime)s][%(threadName)s:%(thread)d][task_id:%(name)s][%(filename)s:%(lineno)d]'
+                      '[%(levelname)s][%(message)s]'
+        },
+        # 简单的日志格式
+        'simple': {
+            'format': '[%(levelname)s][%(asctime)s][%(threadName)s:%(thread)d]%(message)s'
+        },
+        # 定义一个特殊的日志格式
+        'collect': {
+            'format': '%(message)s'
+        }
+    },
+
+    # 2. 过滤器
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+
+    # 3. 处理器
+    'handlers': {
+        # 在终端打印
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],  # 只有在Django debug为True时才在屏幕打印日志
+            'class': 'logging.StreamHandler',  #
+            'formatter': 'simple'
+        },
+        # 默认的
+        'default': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',  # 保存到文件，自动切
+            'filename': os.path.join(BASE_LOG_DIR, "access.log"),  # 日志文件
+            'maxBytes': 1024 * 1024 * 50,  # 日志大小 50M
+            'backupCount': 3,  # 最多备份几个
+            'formatter': 'simple',
+            'encoding': 'utf-8',
+        },
+        # 专门用来记错误日志
+        'error': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',  # 保存到文件，自动切
+            'filename': os.path.join(BASE_LOG_DIR, "error.log"),  # 日志文件
+            'maxBytes': 1024 * 1024 * 50,  # 日志大小 50M
+            'backupCount': 5, # 最多备份几个
+            'formatter': 'simple',
+            'encoding': 'utf-8',
+        },
+        # 专门定义一个收集特定信息的日志
+        'collect': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',  # 保存到文件，自动切
+            'filename': os.path.join(BASE_LOG_DIR, "collect.log"),
+            'maxBytes': 1024 * 1024 * 50,  # 日志大小 50M
+            'backupCount': 5,
+            'formatter': 'simple',
+            'encoding': "utf-8"
+        },
+    },
+
+    # 4. 日志
+    'loggers': {
+       # 默认的logger应用如下配置
+        '': {
+            # 'handlers': ['default', 'console', 'error'],  # 上线之后可以把'console'移除
+            'handlers': ['default', 'error'],  # 上线之后可以把'console'移除
+            'level': 'DEBUG',
+            'propagate': True,  # 向不向更高级别的logger传递
+        },
+        # 名为 'collect'的logger还单独处理
+        'collect': {
+            'handlers': ['console', 'collect'],
+            'level': 'INFO',
+        },
+    },
+}
+
+
+
 
