@@ -1,3 +1,0 @@
-[ERROR][2020-05-12 09:57:20,904][Thread-2:123145490657280][用户: AnonymousUser][POST /api/user/login-user/ 400 Bad Request][{}]
-[ERROR][2020-05-12 09:58:57,609][Thread-2:123145468485632][用户: AnonymousUser][POST /api/user/login-user/ 400 Bad Request][{}][]
-[ERROR][2020-05-12 09:59:33,571][Thread-2:123145454608384][用户: AnonymousUser][POST /api/user/login-user/ 400 Bad Request][{}][Django自定义异常拦截器]

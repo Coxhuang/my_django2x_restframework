@@ -27,16 +27,16 @@ class GetUserConfig(Enum):
     """初始化数据库,自动生成用户所需要的数据"""
 
     SUPERADMIN_USERNAME = "superadmin" # 超级管理员
-    SUPERADMIN_PASSWORD = "superadmin"
-    SUPERADMIN_EMAIL = "superadmin_cloud@trunk.com"
+    SUPERADMIN_PASSWORD = "superadmin123456"
+    SUPERADMIN_EMAIL = "superadmin@minhung.me"
 
     ADMIN_USERNAME = "admin" # 管理员
-    ADMIN_PASSWORD = "admin"
-    ADMIN_EMAIL = "admin_cloud@trunk.com"
+    ADMIN_PASSWORD = "admin123456"
+    ADMIN_EMAIL = "admin@minhung.me"
 
     USERNAME = "user" # 普通用户
-    PASSWORD = "user"
-    EMAIL = "user@trunk.com"
+    PASSWORD = "user123456"
+    EMAIL = "user@minhung.me"
 
 class GetGlobalEnum(Enum):
 

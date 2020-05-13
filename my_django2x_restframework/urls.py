@@ -22,5 +22,5 @@ from rest_framework.documentation import include_docs_urls
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('docs/', include_docs_urls(title='后端接口文档')),
-    path('api/app/', include('app.urls')),
+    path('api/user/', include('app_user.urls')),
 ]

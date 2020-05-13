@@ -26,6 +26,15 @@ SECRET_KEY = 'i^ze2&bdzbqk^vc2y6re9wrd+m_l_s3$t-7!*5es0)-a&vz)p@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : 运行环境
+# * @功能  : 配置服务运行环境
+# * @备注  : DEV_EVN = True: 本地开发环境
+# *                                                                             *
+# *******************************************************************************
+DEV_EVN = True
+
 ALLOWED_HOSTS = ["*"]
 
 
@@ -43,8 +52,8 @@ INSTALLED_APPS = [
     'django_crontab', #
     'rest_framework.authtoken', #
     'rest_framework', #
-    'app',
-    'app_user',
+    'app_test', # test app
+    'app_user', # 用户 app
 ]
 
 MIDDLEWARE = [
