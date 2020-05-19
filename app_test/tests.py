@@ -51,7 +51,7 @@ class AppUserTest(TestCase):
         单元测试方法, 只要满足以test开头的函数名即是 单元测试方法
         :return:
         """
-        response = self.client.get('/api/car/get-car-profile/')
+        response = self.client.get('/api/user/xxx')
         print(response.data)
         # print(dir(response))
         self.assertEquals(response.status_code, 200)

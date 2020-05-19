@@ -108,10 +108,10 @@ class QuickOperation(object):
 
     def run(self, *args, **kwargs):
 
-        if len(args) <= 1:
+        if len(args[0]) <= 1: # 没有参数
             return None
 
-        arg1 = args[0][1]
+        arg1 = args[0][1] # 获取第一个参数
 
         if arg1 == "deletemigrations":
             self.del_db_migrations_files() # 删除迁移文件
