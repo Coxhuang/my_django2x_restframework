@@ -1,5 +1,5 @@
 from redis import Redis
-from my_django2x_restframework.config import myconfig
+# from my_django2x_restframework.config.data.init_data import myconfig
 
 
 class MyRedisConf(Redis):
@@ -176,7 +176,7 @@ class MyRedisConf(Redis):
 
         return self.zrevrange(name, start, end, withscores=withscores,score_cast_func=score_cast_func)
 
-my_redis = MyRedisConf(**myconfig.get_redis_config())
+# my_redis = MyRedisConf(**myconfig.get_redis_config())
 
 # from app.utils.common.cacheredis.cacheredis import my_redis
 
