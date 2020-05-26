@@ -51,4 +51,24 @@ class MySerializerBase(DynamicFieldsMixin,serializers.ModelSerializer,LogsBase):
             'max_decimal_places': "确保%s小数点前不超过{max_whole_digits}个数字。" % field,
             'overflow': "{}日期时间值超出范围。".format(field),
         }
+    def get_request_data(self):
+        """
+        获取request数据
+        :return: request dict
+        """
+
+        return self.context["request"].data
+
+    def django_transaction(self):
+        """
+        MySQL 回滚
+        :return: None
+        """
+        # from django.db import transaction
+        # def new_stu(request):
+        #     with transaction.atomic():  # 事务回滚
+        #         models.Student.objects.create(name="cox2")
+        #     return HttpResponse("success")
+
+        return None
 
