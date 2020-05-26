@@ -57,7 +57,9 @@ class MySerializerBase(DynamicFieldsMixin,serializers.ModelSerializer,LogsBase):
         :return: request dict
         """
 
-        return self.context["request"].data
+        data = self.context["request"].data
+
+        return data
 
     def django_transaction(self):
         """
