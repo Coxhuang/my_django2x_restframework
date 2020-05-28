@@ -15,7 +15,7 @@ from django.test.signals import template_rendered # 使用test测试渲染模板
 from app_user.models import UserProfile
 from data.global_enums import GetUserConfig
 from utils.common.logs.log import LogsBase
-
+from django.conf import settings
 
 
 class SignalsBusinessFunc(object):
@@ -103,3 +103,26 @@ def callback_post_migrate(sender, **kwargs):
 
     return None
 
+
+# *******************************************************************************
+# *                                                                             *
+# * @标题  : 信号量
+# * @功能  : 信号量,Django程序启动之后执行
+# * @备注  : None
+# *                                                                             *
+# *******************************************************************************
+@receiver(class_prepared)
+def callback_runserver(sender, **kwargs):
+    """
+    Django程序启动之后执行
+    :param sender:
+    :param kwargs:
+    :return:
+    """
+    try:
+        print("-------------------------------------")
+        print("-- 环境: {}".format(settings.DEV_EVN))
+        print("-------------------------------------")
+    except:
+        pass
+    return None

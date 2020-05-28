@@ -7,7 +7,7 @@
 """
 
 from enum import Enum
-from config.data.init_data import config_redis
+from config import config_redis
 
 class GetRedisConfig(Enum):
     """"""
