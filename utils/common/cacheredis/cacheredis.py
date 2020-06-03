@@ -173,10 +173,10 @@ class MyRedisConf(Redis):
         :param score_cast_func:  权重数据类型 默认float
         :return: 当withscores=False时(不根据权重值排序)->list; 当withscores=True时(根据权重值排序)->list(tuple) 元组嵌套在列表里面;
         """
-
+        MyRedisConf
         return self.zrevrange(name, start, end, withscores=withscores,score_cast_func=score_cast_func)
 
-# my_redis = MyRedisConf(**myconfig.get_redis_config())
+# my_redis = (**myconfig.get_redis_config())
 
 # from app.utils.common.cacheredis.cacheredis import my_redis
 
