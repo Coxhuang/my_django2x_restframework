@@ -23,7 +23,7 @@ cssselect==1.0.3
 cycler==0.10.0
 decorator==4.0.10
 dict2xml==1.5
-Django==2.0.7
+Django==2.2.13
 django-celery==3.2.2
 django-cors-headers==2.2.0
 django-crontab==0.7.1
